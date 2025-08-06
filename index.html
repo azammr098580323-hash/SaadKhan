@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saad Ur Rehman Khan - Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Poppins (similar to example) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0d0d1a; /* Very dark background for the whole page */
+            color: #e2e8f0; /* Light gray text */
+            scroll-behavior: smooth; /* Smooth scrolling for anchor links */
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 0.5rem;
+            margin-bottom: 2rem;
+            font-size: 2rem; /* text-3xl for mobile */
+            font-weight: 700; /* font-bold */
+            color: #ffffff; /* White title */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .section-title {
+                font-size: 2.5rem; /* text-4xl equivalent, slightly larger */
+            }
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px; /* Default width for mobile */
+            height: 4px;
+            background-color: #8b5cf6; /* Purple accent */
+            border-radius: 9999px; /* rounded-full */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .section-title::after {
+                width: 80px; /* Wider underline on desktop */
+            }
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: transparent;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .navbar.scrolled {
+            background-color: rgba(13, 13, 26, 0.95); /* Darker, slightly opaque on scroll */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu {
+            transition: max-height 0.3s ease-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        .mobile-menu.open {
+            max-height: 500px; /* Arbitrary large height to allow content to show */
+        }
+
+        /* Hero Section */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0; /* Ensures particles are behind content */
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1; /* Ensures content is above particles */
+        }
+        .hero-bg {
+            background-color: #0d0d1a; /* Base dark color */
+            background-image: linear-gradient(to bottom right, #0d0d1a, #1a1a33); /* Subtle gradient */
+        }
+        .hero-social-icon {
+            @apply text-gray-400 hover:text-purple-400 transition duration-300 text-2xl sm:text-3xl; /* Smaller on mobile */
+        }
+
+        /* General Section Backgrounds */
+        .dark-section-bg {
+            background-color: #1a1a33; /* Darker background for sections */
+            color: #e2e8f0;
+        }
+        .darker-section-bg {
+            background-color: #0d0d1a; /* Even darker for some sections */
+            color: #e2e8f0;
+        }
+
+        /* Portfolio specific styles */
+        .portfolio-card {
+            background-color: #2a2a47; /* Card background */
+            @apply rounded-lg shadow-lg overflow-hidden transition duration-300 transform hover:-translate-y-2 hover:shadow-xl;
+        }
+        .portfolio-category {
+            @apply inline-block bg-purple-600 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider;
+        }
+
+        /* Footer */
+        .footer-bg {
+            background-color: #0d0d1a; /* Dark background */
+            background-image: linear-gradient(to bottom right, #0d0d1a, #1a1a33); /* Subtle gradient */
+        }
+        .footer-link {
+            @apply text-gray-400 hover:text-purple-400 transition duration-300;
+        }
+        .footer-social-icon {
+            @apply text-gray-400 hover:text-purple-400 transition duration-300 text-2xl;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation Bar -->
+    <nav class="navbar fixed top-0 left-0 w-full p-4 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#" class="text-white text-xl sm:text-2xl font-bold rounded-md px-3 py-2 transition duration-300">Saad Ur Rehman Khan</a>
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center space-x-6">
+                <a href="#about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-lg font-medium transition duration-300">Home</a>
+                <a href="#skills" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-lg font-medium transition duration-300">Skills</a>
+                <a href="#experience" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-lg font-medium transition duration-300">Experience</a>
+                <a href="#portfolio" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-lg font-medium transition duration-300">Portfolio</a>
+                <a href="#contact" class="bg-purple-600 text-white hover:bg-purple-700 font-bold py-2 px-6 rounded-md shadow-md transition duration-300 transform hover:scale-105">LET'S TALK</a>
+            </div>
+            <!-- Mobile Hamburger Menu and Let's Talk Button for Mobile -->
+            <div class="lg:hidden flex items-center space-x-4">
+                <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                <a href="#contact" class="bg-purple-600 text-white hover:bg-purple-700 font-bold py-2 px-4 rounded-md shadow-md transition duration-300 transform hover:scale-105 text-sm">LET'S TALK</a>
+            </div>
+        </div>
+        <!-- Mobile Menu Links -->
+        <div id="mobile-menu" class="mobile-menu lg:hidden bg-gray-800 mt-4 rounded-md shadow-lg">
+            <a href="#about" class="block text-gray-300 hover:text-white px-4 py-2 text-lg font-medium transition duration-300">Home</a>
+            <a href="#skills" class="block text-gray-300 hover:text-white px-4 py-2 text-lg font-medium transition duration-300">Skills</a>
+            <a href="#experience" class="block text-gray-300 hover:text-white px-4 py-2 text-lg font-medium transition duration-300">Experience</a>
+            <a href="#portfolio" class="block text-gray-300 hover:text-white px-4 py-2 text-lg font-medium transition duration-300">Portfolio</a>
+            <a href="#contact" class="block text-gray-300 hover:text-white px-4 py-2 text-lg font-medium transition duration-300">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-bg text-white min-h-screen flex items-center justify-center relative overflow-hidden pt-20 pb-40 lg:py-0">
+        <div id="particles-js"></div> <!-- Particles.js canvas -->
+        <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-8 hero-content py-8 lg:py-20">
+            <!-- Left Content Area -->
+            <div class="lg:w-1/2 text-center lg:text-left z-10">
+                <p class="text-base sm:text-lg text-gray-300 mb-2 sm:mb-4">Hello Everyone</p>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-3 sm:mb-4">
+                    I Am Saad Ur Rehman Khan <br>
+                    <span class="text-purple-400">Graphic Designer</span> & <span class="text-purple-400">Video Editor</span>
+                </h1>
+                <p class="text-sm sm:text-base lg:text-xl text-gray-300 leading-relaxed mb-6 sm:mb-8 max-w-lg mx-auto lg:mx-0">
+                    I strive to build immersive and beautiful visual content through carefully crafted, user-centric design and engaging video production.
+                </p>
+                <div class="flex justify-center lg:justify-start space-x-4 sm:space-x-6 mb-8 sm:mb-12">
+                    <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="hero-social-icon"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.facebook.com/yourprofile" target="_blank" class="hero-social-icon"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/yourprofile" target="_blank" class="hero-social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/yourprofile" target="_blank" class="hero-social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:your.email@example.com" class="hero-social-icon"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <!-- Right Image Area -->
+            <div class="lg:w-1/2 flex justify-center lg:justify-end z-10">
+                <img src="SaadUrRehmanKhan.png" alt="Saad Ur Rehman Khan" class="rounded-lg shadow-2xl w-full max-w-xs sm:max-w-sm lg:max-w-md object-cover transform transition duration-500 hover:scale-105">
+            </div>
+        </div>
+
+        <!-- Trusted By Section -->
+        <div class="absolute bottom-0 left-0 right-0 py-6 bg-gray-900 bg-opacity-70 z-20">
+            <div class="container mx-auto px-4 flex flex-col lg:flex-row items-center justify-between gap-6">
+                <p class="text-gray-400 text-xs sm:text-sm lg:text-base font-semibold uppercase tracking-wider text-center lg:text-left">
+                    Trusted By The World's <br class="lg:hidden"> Leading Brand
+                </p>
+                <div class="flex flex-wrap justify-center lg:justify-end items-center gap-4 sm:gap-6 lg:gap-10">
+                    <!-- Placeholder Logos -->
+                    <img src="https://placehold.co/80x30/2d3748/FFFFFF?text=LOGO" alt="Logo 1" class="h-6 sm:h-8 opacity-75 hover:opacity-100 transition duration-300">
+                    <img src="https://placehold.co/80x30/2d3748/FFFFFF?text=LOGO" alt="Logo 2" class="h-6 sm:h-8 opacity-75 hover:opacity-100 transition duration-300">
+                    <img src="https://placehold.co/80x30/2d3748/FFFFFF?text=LOGO" alt="Logo 3" class="h-6 sm:h-8 opacity-75 hover:opacity-100 transition duration-300">
+                    <img src="https://placehold.co/80x30/2d3748/FFFFFF?text=LOGO" alt="Logo 4" class="h-6 sm:h-8 opacity-75 hover:opacity-100 transition duration-300">
+                    <img src="https://placehold.co/80x30/2d3748/FFFFFF?text=LOGO" alt="Logo 5" class="h-6 sm:h-8 opacity-75 hover:opacity-100 transition duration-300">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Me Section -->
+    <section id="about" class="py-12 sm:py-20 dark-section-bg rounded-lg shadow-md mx-auto my-6 sm:my-10 max-w-6xl px-4 sm:px-8">
+        <div class="container mx-auto flex flex-col lg:flex-row items-center gap-8 sm:gap-12">
+            <div class="lg:w-1/3 flex justify-center">
+                <img src="Saad Ur Rehman.jpg" alt="Saad Ur Rehman Khan" class="rounded-lg w-48 h-48 sm:w-64 sm:h-64 object-cover shadow-xl border-4 border-purple-500 transform transition duration-500 hover:scale-105">
+            </div>
+            <div class="lg:w-2/3 text-center lg:text-left">
+                <h2 class="section-title">About Me</h2>
+                <p class="text-base sm:text-lg leading-relaxed mb-4 sm:mb-6 text-gray-300">
+                    I am a dedicated and creative professional with a strong background in graphic design and video editing. My expertise lies in crafting compelling visual narratives and engaging digital content that captivates audiences. I thrive on transforming ideas into visually stunning realities, whether it's through intricate design work or dynamic video productions.
+                </p>
+                <p class="text-base sm:text-lg leading-relaxed text-gray-300">
+                    With a keen eye for detail and a passion for innovation, I am constantly exploring new techniques and tools to deliver high-quality results. I am adept at using industry-standard software and am committed to bringing unique perspectives to every project.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-12 sm:py-20 darker-section-bg rounded-lg shadow-md mx-auto my-6 sm:my-10 max-w-6xl px-4 sm:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="section-title">Skills</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mt-8 sm:mt-10">
+                <!-- Graphic Design Skills -->
+                <div class="portfolio-card p-6 sm:p-8">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-purple-400">Graphic Design</h3>
+                    <ul class="list-disc list-inside text-left text-base sm:text-lg space-y-2 text-gray-300">
+                        <li>Adobe Photoshop</li>
+                        <li>Adobe Illustrator</li>
+                        <li>Adobe InDesign</li>
+                        <li>Branding & Logo Design</li>
+                        <li>UI/UX Design Principles</li>
+                        <li>Print Design</li>
+                    </ul>
+                </div>
+                <!-- Video Editing Skills -->
+                <div class="portfolio-card p-6 sm:p-8">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-purple-400">Video Editing</h3>
+                    <ul class="list-disc list-inside text-left text-base sm:text-lg space-y-2 text-gray-300">
+                        <li>Adobe Premiere Pro</li>
+                        <li>Adobe After Effects</li>
+                        <li>DaVinci Resolve</li>
+                        <li>Motion Graphics</li>
+                        <li>Color Grading</li>
+                        <li>Sound Design</li>
+                    </ul>
+                </div>
+                <!-- General Skills -->
+                <div class="portfolio-card p-6 sm:p-8">
+                    <h3 class="text-xl sm:text-2xl font-semibold mb-3 sm:mb-4 text-purple-400">General Skills</h3>
+                    <ul class="list-disc list-inside text-left text-base sm:text-lg space-y-2 text-gray-300">
+                        <li>Creative Direction</li>
+                        <li>Storyboarding</li>
+                        <li>Client Communication</li>
+                        <li>Project Management</li>
+                        <li>Attention to Detail</li>
+                        <li>Problem Solving</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-12 sm:py-20 dark-section-bg rounded-lg shadow-md mx-auto my-6 sm:my-10 max-w-6xl px-4 sm:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="section-title">Experience</h2>
+            <div class="space-y-8 sm:space-y-10 mt-8 sm:mt-10 text-left">
+                <!-- Experience Item 1 -->
+                <div class="flex flex-col lg:flex-row items-start lg:items-center portfolio-card p-6">
+                    <div class="lg:w-1/4 flex-shrink-0 mb-3 lg:mb-0">
+                        <h3 class="text-lg sm:text-xl font-bold text-white">Senior Graphic Designer</h3>
+                        <p class="text-purple-400 text-sm">Company Name, City</p>
+                        <p class="text-gray-400 text-xs sm:text-sm">Jan 2020 – Present</p>
+                    </div>
+                    <div class="lg:w-3/4 lg:pl-8">
+                        <ul class="list-disc list-inside text-base sm:text-lg leading-relaxed text-gray-300 space-y-1 sm:space-y-2">
+                            <li>Led the design and execution of visual concepts for various marketing campaigns, increasing brand engagement by 25%.</li>
+                            <li>Collaborated with marketing and content teams to ensure brand consistency across all platforms.</li>
+                            <li>Developed and maintained brand guidelines, ensuring adherence across all design outputs.</li>
+                            <li>Mentored junior designers, fostering a collaborative and growth-oriented environment.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Experience Item 2 -->
+                <div class="flex flex-col lg:flex-row items-start lg:items-center portfolio-card p-6">
+                    <div class="lg:w-1/4 flex-shrink-0 mb-3 lg:mb-0">
+                        <h3 class="text-lg sm:text-xl font-bold text-white">Video Editor</h3>
+                        <p class="text-purple-400 text-sm">Production Studio, City</p>
+                        <p class="text-gray-400 text-xs sm:text-sm">Mar 2017 – Dec 2019</p>
+                    </div>
+                    <div class="lg:w-3/4 lg:pl-8">
+                        <ul class="list-disc list-inside text-base sm:text-lg leading-relaxed text-gray-300 space-y-1 sm:space-y-2">
+                            <li>Edited and produced high-quality video content for clients, including commercials, documentaries, and social media campaigns.</li>
+                            <li>Managed post-production workflows, including footage ingest, editing, motion graphics, and final delivery.</li>
+                            <li>Utilized advanced editing techniques to enhance storytelling and visual appeal.</li>
+                            <li>Ensured all projects were delivered on time and met client specifications.</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Experience Item 3 -->
+                <div class="flex flex-col lg:flex-row items-start lg:items-center portfolio-card p-6">
+                    <div class="lg:w-1/4 flex-shrink-0 mb-3 lg:mb-0">
+                        <h3 class="text-lg sm:text-xl font-bold text-white">Junior Graphic Designer</h3>
+                        <p class="text-purple-400 text-sm">Design Agency, City</p>
+                        <p class="text-gray-400 text-xs sm:text-sm">Sep 2015 – Feb 2017</p>
+                    </div>
+                    <div class="lg:w-3/4 lg:pl-8">
+                        <ul class="list-disc list-inside text-base sm:text-lg leading-relaxed text-gray-300 space-y-1 sm:space-y-2">
+                            <li>Assisted senior designers in creating various graphic assets for web and print.</li>
+                            <li>Prepared files for print production and digital distribution.</li>
+                            <li>Participated in brainstorming sessions and contributed to creative concepts.</li>
+                            <li>Gained hands-on experience with Adobe Creative Suite.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-12 sm:py-20 darker-section-bg rounded-lg shadow-md mx-auto my-6 sm:my-10 max-w-6xl px-4 sm:px-8">
+        <div class="container mx-auto text-center">
+            <p class="text-purple-400 text-sm uppercase tracking-widest mb-2">Portfolio</p>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-8 sm:mb-12">My Latest Project</h2>
+            <p class="text-base sm:text-lg text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto">
+                Explore my latest projects showcasing creativity, design skills, and development expertise.
+            </p>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mt-8 sm:mt-10">
+                <!-- Portfolio Item 1 (Larger, top-left) -->
+                <div class="portfolio-card flex flex-col">
+                    <img src="https://placehold.co/800x600/3A2D50/FFFFFF?text=Website+Design+Project" alt="Website Design Project" class="w-full h-48 sm:h-64 object-cover">
+                    <div class="p-4 sm:p-6 flex flex-col flex-grow">
+                        <span class="portfolio-category mb-2 sm:mb-3">Website Design</span>
+                        <h3 class="text-xl sm:text-2xl font-semibold mb-1 sm:mb-2 text-white">Summit - Website Design</h3>
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed flex-grow">
+                            Designing visually appealing, user-friendly websites with modern aesthetics and seamless functionality for impact.
+                        </p>
+                        <!-- Optional: Add a "View Project" link here if desired -->
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 2 (Larger, top-right) -->
+                <div class="portfolio-card flex flex-col">
+                    <img src="https://placehold.co/800x600/3A2D50/FFFFFF?text=Mobile+Apps+Design+Project" alt="Mobile Apps Design Project" class="w-full h-48 sm:h-64 object-cover">
+                    <div class="p-4 sm:p-6 flex flex-col flex-grow">
+                        <span class="portfolio-category mb-2 sm:mb-3">Mobile Apps</span>
+                        <h3 class="text-xl sm:text-2xl font-semibold mb-1 sm:mb-2 text-white">Zenify - Mobile Apps Design</h3>
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed flex-grow">
+                            Creating intuitive, user-friendly mobile app interfaces with modern design trends and seamless experiences.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 3 (Larger, bottom-left) -->
+                <div class="portfolio-card flex flex-col">
+                    <img src="https://placehold.co/800x600/3A2D50/FFFFFF?text=Product+Design+Project" alt="Product Design Project" class="w-full h-48 sm:h-64 object-cover">
+                    <div class="p-4 sm:p-6 flex flex-col flex-grow">
+                        <span class="portfolio-category mb-2 sm:mb-3">Product Design</span>
+                        <h3 class="text-xl sm:text-2xl font-semibold mb-1 sm:mb-2 text-white">Helder - Brand Identity Design</h3>
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed flex-grow">
+                            Designing innovative, user-centric products with a perfect blend of aesthetics and functionality.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Portfolio Item 4 (Larger, bottom-right) -->
+                <div class="portfolio-card flex flex-col">
+                    <img src="https://placehold.co/800x600/3A2D50/FFFFFF?text=Graphic+Design+Project" alt="Graphic Design Project" class="w-full h-48 sm:h-64 object-cover">
+                    <div class="p-4 sm:p-6 flex flex-col flex-grow">
+                        <span class="portfolio-category mb-2 sm:mb-3">Graphic Design</span>
+                        <h3 class="text-xl sm:text-2xl font-semibold mb-1 sm:mb-2 text-white">TechNova - Logo Rebranding Design</h3>
+                        <p class="text-sm sm:text-base text-gray-400 leading-relaxed flex-grow">
+                            Creating visually compelling designs that enhance brand identity and engage the target audience.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- You can add more projects here following the same structure -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-12 sm:py-20 dark-section-bg rounded-lg shadow-md mx-auto my-6 sm:my-10 max-w-6xl px-4 sm:px-8">
+        <div class="container mx-auto text-center">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="text-base sm:text-lg mb-6 sm:mb-8 text-gray-300">
+                Have a project in mind or just want to say hello? Feel free to reach out!
+            </p>
+            <form class="max-w-sm sm:max-w-md lg:max-w-xl mx-auto space-y-4 sm:space-y-6">
+                <input type="text" placeholder="Your Name" class="w-full p-3 sm:p-4 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 transition duration-300">
+                <input type="email" placeholder="Your Email" class="w-full p-3 sm:p-4 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 transition duration-300">
+                <textarea placeholder="Your Message" rows="4" sm:rows="6" class="w-full p-3 sm:p-4 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 transition duration-300"></textarea>
+                <button type="submit" class="bg-purple-600 text-white hover:bg-purple-700 font-bold py-2 sm:py-3 px-6 sm:px-8 rounded-full shadow-lg transition duration-300 transform hover:scale-105 text-base sm:text-lg">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Custom Footer Section -->
+    <footer class="footer-bg text-gray-200 py-12 sm:py-16 px-4 sm:px-8 relative overflow-hidden">
+        <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 relative z-10">
+            <!-- Left Section: Project Call to Action & Newsletter -->
+            <div class="col-span-full sm:col-span-2 lg:col-span-2 flex flex-col justify-between">
+                <div>
+                    <p class="text-purple-400 text-xs sm:text-sm mb-1 sm:mb-2">Do You Have A Project In Mind?</p>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-white mb-4 sm:mb-6">
+                        Let's Talk About <br> The Next Big Thing
+                    </h2>
+                    <h3 class="text-xl sm:text-2xl font-bold mb-2 sm:mb-4">Saad Ur Rehman Khan</h3>
+                    <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8 max-w-md">
+                        Explore more with us! Stay updated, connect, and discover new possibilities.
+                    </p>
+                </div>
+                <div>
+                    <p class="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Join Newsletter</p>
+                    <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                        <input type="email" placeholder="Your Email Address" class="flex-grow p-2 sm:p-3 rounded-md bg-gray-700 text-white border border-gray-600 focus:outline-none focus:border-purple-500 text-sm sm:text-base">
+                        <button class="bg-purple-600 text-white font-bold py-2 sm:py-3 px-4 sm:px-6 rounded-md hover:bg-purple-700 transition duration-300 shadow-lg text-sm sm:text-base">SUBSCRIBE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Middle Sections: Pages & Quick Links -->
+            <div class="col-span-full sm:col-span-2 lg:col-span-1 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-8 sm:gap-y-8">
+                <div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-white">Pages</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="#about" class="footer-link text-sm sm:text-base">Home</a></li>
+                        <li><a href="#about" class="footer-link text-sm sm:text-base">About</a></li>
+                        <li><a href="#skills" class="footer-link text-sm sm:text-base">Skills</a></li>
+                        <li><a href="#experience" class="footer-link text-sm sm:text-base">Experience</a></li>
+                        <li><a href="#portfolio" class="footer-link text-sm sm:text-base">Portfolio</a></li>
+                        <li><a href="#contact" class="footer-link text-sm sm:text-base">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-white">Quick Links</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="#" class="footer-link text-sm sm:text-base">Privacy Policy</a></li>
+                        <li><a href="#" class="footer-link text-sm sm:text-base">Terms of Services</a></li>
+                        <li><a href="#" class="footer-link text-sm sm:text-base">Credits</a></li>
+                        <li><a href="#" class="footer-link text-sm sm:text-base">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Right Section: Follow Me On -->
+            <div class="col-span-full sm:col-span-2 lg:col-span-1">
+                <h3 class="text-lg sm:text-xl font-bold mb-4 sm:mb-6 text-white">Follow Me On</h3>
+                <p class="text-gray-400 text-sm sm:text-base leading-relaxed mb-4 sm:mb-6">
+                    Stay connected and follow me for the latest updates, designs, and inspirations.
+                </p>
+                <div class="flex space-x-4 sm:space-x-6">
+                    <!-- Using Font Awesome for social icons -->
+                    <a href="https://www.linkedin.com/in/yourprofile" target="_blank" class="footer-social-icon text-xl sm:text-2xl"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/yourprofile" target="_blank" class="footer-social-icon text-xl sm:text-2xl"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/yourprofile" target="_blank" class="footer-social-icon text-xl sm:text-2xl"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com/yourprofile" target="_blank" class="footer-social-icon text-xl sm:text-2xl"><i class="fab fa-twitter"></i></a>
+                    <a href="mailto:your.email@example.com" class="footer-social-icon text-xl sm:text-2xl"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Email Address -->
+        <div class="container mx-auto text-left mt-10 pt-6 sm:mt-16 sm:pt-8 border-t border-gray-700">
+            <p class="text-gray-400 text-xs sm:text-sm">My Email</p>
+            <p class="text-white text-base sm:text-lg font-semibold">your.email@example.com</p>
+        </div>
+    </footer>
+
+    <!-- Particles.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#8b5cf6" /* Purple color for particles */
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    },
+                    "image": {
+                        "src": "img/github.svg",
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#8b5cf6", /* Purple color for lines */
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 6,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) { // Adjust scroll threshold as needed
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                mobileMenu.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
